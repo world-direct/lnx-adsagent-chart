@@ -1,0 +1,16 @@
+questions:
+
+- variable: settings.AZP_URL
+  label: AZP_URL
+  description: "The URL of the Azure Devops Server"
+  required: true
+
+- variable: settings.AZP_POOL
+  label: AZP_POOL    
+  description: "The name of the Agent Pool"
+  required: true
+
+- variable: settings.AZP_TOKEN
+  label: AZP_TOKEN
+  description: "The URL of the Azure Devops Server"
+  required: true
