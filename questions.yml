@@ -4,16 +4,19 @@ questions:
   label: AZP_URL
   description: "The URL of the Azure Devops Server"
   required: true
+  group: Connection
   default: ""
 
 - variable: settings.AZP_POOL
   label: AZP_POOL    
   description: "The name of the Agent Pool"
   required: true
+  group: Connection
   default: ""
 
 - variable: settings.AZP_TOKEN
   label: AZP_TOKEN
+  group: Connection
   type: password
   default: ""
   description: "The URL of the Azure Devops Server"
