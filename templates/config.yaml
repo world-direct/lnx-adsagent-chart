@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "lnx-adsagent.fullname" . }}-config
+type: Opaque
+data:
+  AZP_URL: {{ required "settings.AZP_URL is required" .Values.settings.AZP_URL | b64enc | quote }}
+  AZP_POOL: {{ required "settings.AZP_POOL is required" .Values.settings.AZP_POOL | b64enc | quote }}
+  AZP_TOKEN: {{ required "settings.AZP_TOKEN is required" .Values.settings.AZP_TOKEN | b64enc | quote }}

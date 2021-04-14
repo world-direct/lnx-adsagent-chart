@@ -1,0 +1,4 @@
+The lnx-adsagent has been installed.
+
+AZP_URL: {{ .Values.settings.AZP_URL }}
+AZP_POOL: {{ .Values.settings.AZP_POOL }}

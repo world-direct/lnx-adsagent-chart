@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: 
+    name: {{ include "lnx-adsagent.fullname" . }}
+spec:
+  serviceName: {{ include "lnx-adsagent.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "lnx-adsagent.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "lnx-adsagent.selectorLabels" . | nindent 8 }}
+    spec: 
+      volumes: 
+        - name: docker-graph-storage 
+          emptyDir: {}    
+      containers: 
+
+        - name: ads-agent 
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ include "lnx-adsagent.fullname" . }}-config
+
+          env:
+
+            - name: DOCKER_HOST 
+              value: tcp://127.0.0.1:2375
+
+              # the agent name is the name of the pod
+            - name: AZP_AGENT_NAME
+              valueFrom:
+                  fieldRef:
+                      fieldPath: metadata.name
+
+        - name: dind-daemon 
+          image: docker:18-dind 
+          securityContext: 
+              privileged: true 
+          volumeMounts: 
+            - name: docker-graph-storage 
+              mountPath: /var/lib/docker 
